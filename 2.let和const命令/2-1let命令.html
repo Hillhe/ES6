@@ -57,28 +57,6 @@ console.log(typeof lalal) //undefined
 console.log(
 ` 四、不予许重复声明：
     1.let不允许在相同的作用域内重复声明一个变量
-    2.块级作用域
-        2-1：为什么需要块级作用域？
-            （1）内层变量可能会覆盖外层变量
-            （2）用来计数的循环变量泄露为全局变量
-    3.es6的块级作用域
-        //TODO
-    【es5只有全局作用域和函数作用域，没有块级作用域】
 `)
-// 2-1-（1）
-var tmp = new Date();
-function f() {
-  console.log(tmp);
-  if (false) {
-    var tmp = 'hello world';
-  }
-}
-f(); // undefined， 变量提升
-// 2-1-（2）
-var s = 'hello';
-for (var i = 0; i < s.length; i++) {
-  console.log(s[i]);
-}
-console.log(i); // 5
 </script>
 </html>

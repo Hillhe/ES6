@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>顶层对象属性</title>
+</head>
+<body>
+    
+</body>
+<script>
+console.log(
+` 一、顶层对象属性
+    1.在浏览器环境中是window对象，在node中是global对象
+    2.es5: var命令和function命令声明的全局变量，是顶层对象的属性
+    3.es6: var,function声明的变量依旧保持es5的行为，但是let,const,class声明的全局变量，不属于顶层对象的属性 
+    【es5中顶层对象的属性与全局变量是等价的】
+`)
+
+// 1
+window.a = 1;
+a // 1
+a = 2;
+window.a // 2
+// 2
+var b = 12;
+window.b //12
+// 3
+let c = 12
+window.c //undefined
+</script>
+</html>
