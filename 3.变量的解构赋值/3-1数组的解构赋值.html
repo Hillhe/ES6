@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组的解构赋值</title>
+</head>
+<body>
+    
+</body>
+<script>
+console.log(
+` 一、基本用法
+    1.只要等号两边的模式相同，左边的变量就会被赋予对应的值，如果解构不成功，变量的值就是undefined
+    2.不完全解构：等号左边的模式，只匹配等号右边数组的一部分
+    3.如果等号右边不是数组(或者严格的说，不是可以遍历的结构)那么将会报错
+    4.对于set结构，也可以使用数组的解构赋值
+`)
+// 1
+let [x, y, ...z] = ['a']
+console.log(x, y, z) // a undefined []
+let [coo] = [];
+let [aoo, boo] = ['aoo']
+console.log(coo, aoo, boo) //undefined aoo undefined
+// 2
+let [m, n] = [1, 2, 3]
+let [a, [b], c] = [1, [2, 3], 4]
+console.log(m, n) // 1 2
+console.log(a, b, c) // 1 2 4
+// 4
+let [j, q, k] = new Set(['j', 'q', 'k'])
+console.log(j, q, k) // j q k
+console.log(
+` 二、默认值
+    1.解构赋值允许指定默认值
+    2.es6内部使用严格相等运算符(===),判断一个位置是否有值，所以，只有当一个数组成员严格等于undefined，默认值才会生效
+    3.如果默认值是一个表达式，那么这个表达式是惰性求值的，即只有在用到的时候才会求值
+    4.默认值可以引用解构赋值的其他变量，但该变量必须已经声明
+`)
+// 1
+let [doo = 'doo'] = []
+console.log(doo) // doo
+// 2
+let [eoo, foo = 'foo'] = ['a', undefined]
+console.log(eoo, foo)  // a foo
+let [g, h = 'h'] = ['g', null]
+console.log(g, h) //g, null
+// 3
+function i() {
+    console.log('iii')
+}
+let [l = i()] = [1];
+console.log(l)  // 1
+let [o = i()] = []
+console.log(o) //打印iii, o的值是undefined
+// 4
+let [p = 1, q = p] = []
+console.log(p, q) // 1 1 
+</script>
+</html>
