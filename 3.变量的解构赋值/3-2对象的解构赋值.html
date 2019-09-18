@@ -12,7 +12,66 @@
 <script>
 console.log(
 ` 一、基本用法
-    1.变量必须与属性同名，才能取到正确的值
+    1.变量必须与属性同名，才能取到正确的值,如果解构失败，变量的值等于undefined
+    2.与数组一样，解构也可以用于嵌套结构的对象, 【冒号前是模式，冒号后才是变量】
+    3.嵌套赋值
+    4.如果解构模式是嵌套的对象，而且子对象所在的父属性不存在，那么将会报错
+    5.对象的解构也可以指定默认值，默认值生效的条件是属性值【严格等于undefined】
+    6.注意点：
+        6-1：如果要将一个已经声明的变量用于解构赋值，必须非常小心
+        6-2：解构赋值允许等号左边的模式之中，不放置任何变量名
+        6-3：由于数组本质是特殊的对象，因此可以对数组进行对象属性的解构
 `)
+// 1
+let {foo} = {bar: 'bar'}
+console.log(foo)
+// 2
+let obj = {
+    p: [
+        'hello',
+        {
+            y: 'world'
+        }
+    ]
+}
+let { p: [x, { y }]} = obj;
+console.log(x, y)
+const node = {
+    loc: {
+        start: {
+            line: 1,
+            column: 5
+        }
+    }
+}
+let { loc, loc: { start }, loc: { start: { line }} } = node;
+console.log(loc, start, line)
+// 3
+let object = {};
+let arr = [];
+({foo: object.prop, bar: arr[0] } = { foo: 123, bar: true });
+console.log(object, arr)
+// 4
+let { coo: { bar } = {}} = {baz: 'baz'};
+console.log(bar);
+// 5
+let { o = 3 } = {o: undefined}; // 3
+let { p = 3 } = {p: null} // null
+console.log(o, p)
+// 6-1
+// 错误的写法
+// let t; {t} = {t: 1}; JS会将{t}理解为代码块
+// 正确的写法
+let t;
+({t} = {t: 1});
+// 6-2 表达式虽然毫无意义，但是语法是合法的
+({} = [true, false]);
+({} = 'abc');
+({} = []);
+// 6-3
+let arr = [1, 2, 3];
+let {0 : first, [arr.length - 1] : last} = arr;
+first // 1
+last // 3
 </script>
 </html>
