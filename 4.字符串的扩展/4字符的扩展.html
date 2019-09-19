@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串的扩展</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、字符的 Unicode 表示法
+    1.可表示码点在\u0000~\uFFFF之间的字符，出这个范围的字符，必须用两个双字节的形式表示。
+    2.如果直接在'\\u'后面跟上超过0xFFFF的数值（比如\\u20BB7），JavaScript 会理解成\\u20BB+7。由于\\u20BB是一个不可打印字符，所以只会显示一个空格，后面跟着一个7。
+    3.【ES6 对这一点做出了改进，只要将码点放入大括号，就能正确解读该字符】
+    4.【JavaScript 共有 6 种方法可以表示一个字符】
+`)
+// 1
+log("\uD842\uDFB7")
+// 2
+log("\u20BB7")
+// 3
+log("\u{20BB7}")
+// 4
+'\z' === 'z'  // true
+'\172' === 'z' // true
+'\x7A' === 'z' // true
+'\u007A' === 'z' // true
+'\u{7A}' === 'z' // true
+log(
+`二、字符串的遍历器接口
+    1.for...of遍历，【最大的优点是可以识别大于0xFFFF的码点】
+`)
+log(
+`三、模板字符串
+    1.如果在模板字符串中需要使用反引号，则前面要用反斜杠转义
+    2.如果使用模板字符串表示多行字符串，所有的空格和缩进都会被保留在输出之中
+    3.模板字符串中也能调用函数
+`)
+// 1
+let greeting = `\`Yo\` World!`;
+log(greeting)
+// 3
+function fn() {
+    return 'hello world';
+}
+log(`fo ${fn()} lalal`)
+log(
+`四、标签模板
+    1.可以紧跟在一个函数名后边，该函数将被调用来处理这个字符串模板
+    2.标签模板不是模板，而是函数调用的一种形式，'标签'指的就是函数，紧跟在后面的模板字符串就是他的参数
+    3.如果模板字符串里面有变量，就不是简单的调用了，而是会将模板字符串先处理成多个参数，再调用函数
+`)
+// 1
+alert`123` //等同于alert(123)
+// 3
+</script>
+</html>
