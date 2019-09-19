@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串，布尔值，函数参数的解构赋值</title>
+</head>
+<body>
+    
+</body>
+<script>
+console.log(
+` 一、字符串的解构赋值
+    1.字符串解构赋值，字符串被准换成了一个类似数组的对象
+    2.类似数组的对象有一个length属性，因此还可以对这个属性解构赋值
+`)
+let { log } = console
+// 1
+const [a, b, ...c] = 'hello'
+log(a, b, c)
+// 2
+let {length: len} = 'hello'
+log(len)
+console.log(
+` 二、数值和布尔的解构赋值
+    1.如果等号左边是数值或者布尔值，则会先转为对象
+    2.【解构赋值的规则是，只要等号右边的值不是数组或者对象，就先将其转为对象。由于undefined和null无法转为对象，所以对他们进行解构赋值会报错】
+`)
+console.log(
+` 三、函数参数的解构赋值
+    1.
+`)
+function move1({x, y} = {x: 0, y: 0}) {
+    return [x, y]
+}
+log(move1({x: 3, y: 8}))
+log(move1({x: 3}))
+log(move1({}))
+log(move1())
+log("--------------------------------")
+function move2({x = 0, y = 0} = {}) {
+    return [x, y]
+}
+log(move2({x: 3, y: 8}))
+log(move2({x: 3}))
+log(move2({}))
+log(move2())
+</script>
+</html>

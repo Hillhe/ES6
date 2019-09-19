@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用途</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+` 一、用途
+    1.变量的值交换
+    2.函数返回多个值，在数组或者对象里，便于取出
+    3.函数参数的定义
+    4.提取json数据
+    5.函数参数的默认值
+    6.遍历Map结构
+    7.输入模块的指定方法
+`)
+// 1
+let x = 1, y = 2;
+[x, y] = [y, x]
+log(x, y)
+// 6
+const map = new Map();
+map.set('first', 'hello')
+map.set('second', 'world')
+for(let [key, value] of map) {
+    log(key + ' is ' + value)
+}
+// 7
+// const { SourceMapConsumer, SourceNode } = require("source-map");
+</script>
+</html>
