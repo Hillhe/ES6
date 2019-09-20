@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>字符串新增的方法</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、字符串新增的方法
+    1.String.raw()
+        1-1：可以作为处理模板字符串的基本方法，它会将所有变量替换，而且对斜杠进行转义，方便下一步作为字符串来使用。
+        1-2: 可以作为正常的函数使用。这时，它的第一个参数，应该是一个具有raw属性的对象，且raw属性的值应该是一个数组。
+    2.实例方法
+        2-1：includes: 返回布尔值，表示是否找到了参数字符串，【支持第二个参数，表示开始搜索的位置】
+        2-2: startWith: 返回布尔值，表示参数字符串是否在原字符串的头部，【支持第二个参数，表示开始搜索的位置】
+        2-3: endWith: 返回布尔值，表示参数字符串是否在原字符串的尾部，【支持第二个参数，表示前n个字符】
+        2-4：repeat: 返回新字符串，表示将原来字符串重复n次,如果参数是负数或者Infinity会报错，但是如果是0到-1之间的小数，则等同于0
+        2-5[es2017]：padStart: 返回新字符串，头部补全，如果省略第二个参数，会用空格代替
+        2-6[es2017]：padEnd: 返回新字符串，尾部补全
+        2-7[es2019]: trimStart: 返回新字符串，消除字符串头部的空格
+        2-8[es2019]: trimEnd: 返回新字符串，消除字符串尾部的空格
+        2-9：matchAll: 返回一个正则表达式在当前字符串的所有匹配
+`)
+let str = 'hello world!';
+let x = 'x';
+// 1-1
+log(String.raw`Hi\\n`)
+// 1-2
+let res1 = String.raw({ raw: 'test' }, 0, 1, 2);
+log(res1) //t0e1s2t 等同于String.raw({ raw: ['t','e','s','t'] }, 0, 1, 2);
+// 2-3
+log(str.endsWith('lo', 5)) //true,下标从1开始
+// 2-4
+log(x.repeat(5), x) //xxxxx
+// 2-5
+log(x.padStart(5, 'abc'), x)
+</script>
+</html>
