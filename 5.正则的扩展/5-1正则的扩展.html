@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>正则的扩展</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、RegExp构造函数
+    1.如果RegExp构造函数第一个参数是一个正则对象，那么可以使用第二个参数指定修饰符。而且，返回的正则表达式会忽略原有的正则表达式的修饰符，只使用新指定的修饰符。
+    2.match,replact,search,split在内部从String的实例方法变为RegExp的实例方法
+    3.RegExp.prototype.flags: ES6 为正则表达式新增了flags属性，会返回正则表达式的修饰符
+`)
+// 1
+let reg1 = new RegExp(/abc/ig, 'i') //原有正则对象的修饰符是ig，它会被第二个参数i覆盖
+log(
+`二、u修饰符
+    1.ES6 对正则表达式添加了u修饰符，含义为“Unicode 模式”，用来正确处理大于\\uFFFF的 Unicode 字符。也就是说，会正确处理四个字节的 UTF-16 编码。
+    2.一旦加上u修饰符，就会修改下面这些行为
+        2-1：点字符： 点（.）字符在正则表达式中，含义是除了换行符以外的任意单个字符。对于码点大于0xFFFF的 Unicode 字符，点字符不能识别，必须加上u修饰符。
+        2-2: Unicode 字符表示法
+        2-3: 量词
+        2-4: 预定义模式
+    3.RegExp.prototype.unicode 属性 
+        1.正则实例对象新增unicode属性，表示是否设置了u修饰符。
+`)
+let utf16 = '\uD83D\uDC2A';
+let ji = '𠮷'
+var s = 'aaa_aa_a';
+// 1
+// /^\uD83D/u.test(utf16) // es6, false
+// /^\uD83D/.test(utf16) // es5, true
+// 2-1
+// /^.$/.test(ji) // es5, false
+// /^.$/u.test(ji) // es6, true
+log(
+`三、y修饰符（“粘连”（sticky）修饰符）
+    1.y修饰符的作用与g修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g修饰符只要剩余位置中存在匹配就可，而y修饰符确保匹配必须从剩余的第一个位置开始，这也就是“粘连”的涵义。
+    2.y修饰符号隐含了头部匹配的标志^,y修饰符的设计本意，就是让头部匹配的标志^在全局匹配中都有效。
+    3.RegExp.prototype.sticky 属性
+        3-1: ES6 的正则实例对象多了sticky属性，表示是否设置了y修饰符
+`)
+// 1
+var r1 = /a+/g;
+var r2 = /a+/y;
+
+r1.exec(s) // ["aaa"]
+r2.exec(s) // ["aaa"]
+
+r1.exec(s) // ["aa"]
+r2.exec(s) // null
+log(
+`四、具名组匹配
+    1.[es2018]允许为每一个组匹配指定一个名字,如果具名组没有匹配，那么对应的groups对象属性会是undefined
+    2.字符串替换时，使用$<组名>引用具名组
+`)
+const RE_DATE = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/;
+// 1
+let m1 = RE_DATE.exec('2019-09-20')
+log(m1.groups)
+// 2
+let m2 = '2019-09-20'.replace(RE_DATE, '$<day>/$<month>/$<year>')
+log(m2)
+log(
+`五、matchAll
+    1.string.matchAll(regex)返回的是遍历器，所以可以用for...of循环取出
+`)
+//------------------------------es5-----------------------------------
+// 如果一个正则表达式在字符串里面有多个匹配，现在一般使用g修饰符或y修饰符，在循环里面逐一取出。
+var regex = /t(e)(st(\d?))/g;
+var string = 'test1test2test3';
+
+var matches = [];
+var match;
+while (match = regex.exec(string)) {
+  matches.push(match);
+}
+log(matches)
+// -----------------------------------------matchAll
+for (const match of string.matchAll(regex)) {
+  console.log(match);
+}
+// 遍历器转为数组是非常简单的，使用...运算符和Array.from方法就可以了。
+log([...string.matchAll(regex)])
+// 转为数组方法二
+log(Array.from(string.matchAll(regex)));
+</script>
+</html>
