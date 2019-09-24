@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>函数的扩展</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、函数参数的默认值
+    1.函数参数变量是默认声明的，所以不能用let或者const再次声明
+    2.使用默认参数时，函数不能有同名参数
+    3.参数默认值不是传值的，而是每次都重新计算默认值表达式的值
+    4.与结构赋值默认值结合使用
+    5.默认参数应该是尾参数
+    6.指定了默认值以后，函数的length属性，将返回没有指定默认值的参数个数【也就是说指定了默认值以后，length属性将失真】
+    7.如果设置了默认参数不是尾参数，那么length属性也不再计入后面的参数了
+    8.一旦设置了参数的默认值，函数进行声明初始化时，参数会形成一个单独的作用域，等到初始化结束，这个作用域就会消失【不设默认参数不会出现】
+`)
+// 2
+function name(x, x, y) {} //正确
+// function name(x, x, y = 1) 错误 Unexpected identifier
+// 3
+function foo(p = x + 1) {
+    log(p)
+}
+let x = 99;
+foo()
+x = 100;
+foo()
+// 4
+function aoo({x, y = 5} = {}) {
+    log(x, y)
+}
+aoo()
+// 6
+log(aoo.length, name.length, foo.length); //0 3 0
+// 7
+(function (a = 0, b, c) {}).length; // 0
+(function (a, b = 1, c) {}).length; // 1 
+// 8
+function f(y = x) {
+    let x = 2;
+    log(y)
+}
+f() //100
+function foo(x, y = function() { x = 2; }) {
+  var x = 3;
+  y();
+  console.log(x);
+}
+foo() // 3
+log(x) // 100
+function foo2(x, y = function() { x = 2; }) {
+  x = 3;
+  y();
+  console.log(x);
+}
+foo2() // 2
+log(x) // 100
+log(
+`二、rest参数
+    1.(...变量名)，用于获取函数的多余参数，不使用arguments。rest参数搭配的变量是一个数组，该变量将多余的参数放入数组中
+    2.rest参数之后不能再有其他参数，否则会报错
+    3.函数的length属性，不包括rest参数
+    4.【es6】只要函数使用了默认值，结构赋值，或者扩展运算符，函数内部不能显示设定为严格模式
+`)
+// 3
+log((function(a) {}).length); //1
+log((function(...a) {}).length); //0
+log((function(a, ...b) {}).length); //1
+log(
+`三、name属性
+    1.函数的name属性，返回该函数的函数名
+    2.匿名函数赋值给变量，es5返回空字符串，es6返回函数名
+`)
+</script>
+</html>
