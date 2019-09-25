@@ -7,7 +7,7 @@
     <title>函数的扩展</title>
 </head>
 <body>
-    
+    <button id="btn">test</button>
 </body>
 <script>
 let {log} = console
@@ -79,5 +79,106 @@ log(
     1.函数的name属性，返回该函数的函数名
     2.匿名函数赋值给变量，es5返回空字符串，es6返回函数名
 `)
+log(
+`四、箭头函数
+    1.如果箭头函数直接返回一个对象，必须在对象的外边加上括号，否则会报错
+    2.如果箭头函数只有一行语句，并且不需要返回值，可以不用大括号
+    3.【注意点】
+        3-1：函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象
+        3-2：不能当做构造函数，也就是说，不能使用new命令，否则报错
+        3-3：不能使用arguments对象，该对象在函数体内不存在，可以用rest参数代替
+        3-4：不能使用yield命令，箭头函数不能用做Generator函数
+        3-5: 因为没有this,所以也不能使用call, apply, bind
+    4.【不适用场合】
+        4-1：定义对象的方法，且该方法内部包括this
+        4-2: 需要动态this的时候
+    5.嵌套的箭头函数
+        5-1：箭头函数的内部，还可以再使用箭头函数
+    6.尾调用优化
+        6-1：函数调用会在内存形成一个“调用记录”，又称“调用帧”（call frame），保存调用位置和内部变量等信息。如果在函数A的内部调用函数B，那么在A的调用帧上方，还会形成一个B的调用帧。等到B运行结束，将结果返回到A，B的调用帧才会消失。如果函数B内部还调用函数C，那就还有一个C的调用帧，以此类推。所有的调用帧，就形成一个“调用栈”（call stack）。
+             即只保留内层函数的调用帧。如果所有函数都是尾调用，那么完全可以做到每次执行时，调用帧只有一项，这将大大节省内存。这就是“尾调用优化”的意义。
+    7.尾递归：函数调用自身，称为递归。如果尾调用自身，就称为尾递归
+        7-1：递归函数的改写：递归函数确保最后一步只调用自身，做到这一点就是把所用到的内部变量改写成函数的参数
+`)
+// 1
+let getTempItem  = id => ({id: id, temp: "temp"})
+log(getTempItem(123))
+// 2
+let fn = (a) => void log(a)
+fn(11111)
+// 3-1
+function jiantou() {
+    var id = 22;
+    setTimeout(() => {
+        log('id', this.id)
+    }, 0)
+}
+var id = 21;
+jiantou()
+jiantou.call({id: 23})
+// 4-1
+const cat1 = {
+    lives: 9,
+    jumps: () => {
+        this.lives--;
+        log("lives:", this.lives)
+    } 
+}
+cat1.jumps() //lives: NaN
+const cat = {
+    lives: 9,
+    jumps() {
+        this.lives--;
+        log("lives:", this.lives)
+    } 
+}
+cat.jumps() //lives: 8
+// 4-2
+let btn = document.getElementById('btn')
+// btn.addEventListener('click', () => {
+//     this.classList.toggle('on') //Cannot read property 'toggle' of undefined
+// })
+btn.addEventListener('click', function() {
+    this.classList.toggle('on')
+    log(this.classList)
+})
+// 5-1
+let insert = (value) => ({into: (array) => ({after: (afterValue) => {
+  array.splice(array.indexOf(afterValue) + 1, 0, value);
+  return array;
+}})});
+log(insert(5).into([1,2,3,4,6,7]).after(4))
+// 部署管道机制（pipeline）的例子，即前一个函数的输出是后一个函数的输入
+const pipeline = (...funcs) => val => funcs.reduce((a, b) => b(a), val);
+const plus1 = a => a + 1;
+const mult2 = a => a * 2;
+const addThenMult = pipeline(plus1, mult2);
+log(addThenMult(5))
+// 7-1
+function Febonacci(n) {
+    if(n <= 1) {
+        return 1;
+    }
+    return Febonacci(n-1) + Febonacci(n-2)
+}
+console.time("计算10")
+log(Febonacci(10)) //89
+console.timeEnd("计算10") //0.14306640625ms
+// console.time("计算100")
+// log(Febonacci(100)) //tiemout
+// console.timeEnd("计算100")
+
+function Febonacci2(n, ac1 = 1, ac2 = 1) {
+    if(n <= 1) {
+        return ac2;
+    }
+    return Febonacci2(n - 1, ac2, ac1 + ac2)
+}
+console.time("计算10")
+log(Febonacci2(10)) //89
+console.timeEnd("计算10") //0.1318359375ms
+console.time("计算100")
+log(Febonacci2(100)) //573147844013817200000
+console.timeEnd("计算100") //0.11376953125ms
 </script>
 </html>
