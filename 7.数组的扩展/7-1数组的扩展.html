@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组的扩展</title>
+</head>
+<body>
+</body>
+<script>
+let {log} = console
+log(
+`一、扩展运算符
+    1.（...）将一个数组转为用逗号分隔的参数序列
+    2.（...）后边可以放置表达式
+    3.（...）后面可以是一个空数组
+    4.（...）替代apply方法
+    5.（...）的应用
+        5-1：复制数组，浅拷贝
+        5-2：合并数组，浅拷贝
+        5-3：与解构赋值结合，生成数组
+        5-4：将字符串转为数组
+        5-5：实现了Iterator接口的对象，任何定了一遍历器接口的对象，都可以使用（...）转为真正的数组（NodeList, arguments等）
+        5-6：Map, set, Generator函数
+`)
+// 1
+log(...[1,3,4])
+// 2
+let x = 10;
+const arr = [
+  ...(x > 0 ? ['a'] : []),
+  'b',
+];
+log(arr)
+// 3
+log([...[], 1])
+// 4
+// es5
+log(Math.max.apply(null, [1, 4, 3])) //4
+// es6
+log(Math.max(...[1, 4, 3])) //3
+// 5-1
+const a1 = [1, 2, {name: "sss"}]
+// 写法一
+const a2 = [...a1]
+// 写法二
+const [...a3] = a1;
+a1[0] = 123;
+a1[2].name = "test"
+log(a1, a2, a3)
+// 5-6
+let map = new Map([
+  [1, 'one'],
+  [2, 'two'],
+  [3, 'three'],
+]);
+let set = new Set(["a", "b"])
+log([...map.keys()], [...map.values()], ...set)
+log(
+`二、Array.from(): 转为真正的数组,第二个参数是map遍历
+    1.类数组对象,所谓类似数组的对象，本质特征只有一点，即必须有length属性
+    2.可遍历的(Iterable)对象(包括es6的Map和Set)
+`)
+// 1
+let arrLike = {
+    0: 'a',
+    1: 'b',
+    2: 'c',
+    length: 3
+}
+let arrLike2 = {length: 3}
+// es5
+log([].slice.call(arrLike))
+// es6
+log(Array.from(arrLike))
+log(Array.from(arrLike2)) //[undefined, undefined, undefined]
+// 2
+log(Array.from('hello'))
+log(Array.from(map), Array.from(set))
+</script>
+</html>
