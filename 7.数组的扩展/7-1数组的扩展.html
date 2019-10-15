@@ -78,5 +78,49 @@ log(Array.from(arrLike2)) //[undefined, undefined, undefined]
 // 2
 log(Array.from('hello'))
 log(Array.from(map), Array.from(set))
+log(
+`三、Array.of()用于将一组值，转换为数组;总是返回参数值组成的数组，如果没有参数，就返回一个空数组
+    1.弥补数组构造函数Array()的不足,参数个数的不同，会导致Array()的行为有差异
+`)
+// 1
+log(Array())
+log(Array(3))
+log(Array(1,2,3))
+// es5
+function ArrayOf() {
+    return [].slice.call(arguments);
+}
+// es6
+log(Array.of())
+log(Array.of(undefined))
+log(Array.of(1))
+log(Array.of(1,2,3))
+log(
+`四、copyWithin()将指定位置的成员复制到其他位置（会覆盖原有成员），然后返回当前数组。会修改当前数组
+`)
+log(
+`五、find(),用于找出第一个符合条件的数组成员,无则返回undefined
+     findIndex() 用于找出第一个符合条件的数组成员下标，无则返回-1
+     可以发现NaN
+`)
+let find = [1, 4, -5, 10];
+log(find.find(n => n < 0)) //-5
+log(find.findIndex(n => n < 0)) //2
+log(find.find(n => n == 11)) //undefined
+log(find.findIndex(n => n == 11)) //-1
+log(
+`六、数组的实例fill,使用给定值，填充一个数组
+    *如果填充的类型为对象，那么被赋值的是同一个内存地址，而不是深拷贝对象
+`)
+log(['a', 'b', 'c'].fill(7,1,2))
+let fill = new Array(3).fill([])
+fill[0].push(5)
+log(fill)
+log(
+`七、数组实例的 entries()，keys() 和 values()
+`)
+log(
+`八、数组实例的includes(),表示某个数组是否包含给定的值，返货布尔值
+`)
 </script>
 </html>
