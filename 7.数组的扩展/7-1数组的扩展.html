@@ -120,7 +120,12 @@ log(
 `七、数组实例的 entries()，keys() 和 values()
 `)
 log(
-`八、数组实例的includes(),表示某个数组是否包含给定的值，返货布尔值
+`八、数组实例的includes(),表示某个数组是否包含给定的值，返回布尔值
 `)
+log(
+`九、数组实例的flat和flatMap方法，返回一个新数组,flatMap只能展开一层数组
+`)
+log([1, 2, [3, 4]].flat(Infinity));
+log([1, 2, [3, 4]].flatMap(x => x*2));
 </script>
 </html>

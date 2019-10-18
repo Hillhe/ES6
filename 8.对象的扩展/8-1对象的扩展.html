@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>对象的扩展</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、属性简写
+`)
+log(
+`二、属性名表达式
+    1.对象字面量属性名
+    2.表达式也可用于定义方法名
+    3.属性名表达式如果是一个对象，默认会将对象转为字符串[object object]
+`)
+let propKey = "hello world"
+log({
+    [propKey]: 123,
+    ['a' + 'c']: 456
+})
+log(
+`三、可枚举性和遍历
+    1.对象的每个属性都有一个描述对象，Object.getOwnPropertyDescriptor方法可以获取该属性的描述对象。
+        目前有四个操作会忽略enumerable为false的属性
+        （1）for...in循环：只遍历对象自身的和继承的可枚举的属性
+        （2）Object.keys(): 返回对象自身的所有可枚举的属性的键名
+        （3）JSON.stringify()：只串行化对象自身的可枚举的属性。
+        （4）Object.assign()： 忽略enumerable为false的属性，只拷贝对象自身的可枚举的属性。
+`)
+// 1
+let obj = {foo: 123};
+Object.defineProperty(obj, 'boo', {
+    value: 456,
+    writable: true,
+    enumerable: false
+})
+log(obj)
+log(Object.getOwnPropertyDescriptor(obj, 'boo'))
+// （1）
+for (const key in obj) {
+    log(key)
+}
+// （2）
+log(Object.keys(obj))
+// （3）
+log(JSON.stringify(obj))
+// （4）
+log(Object.assign({}, obj))
+log(
+`四、属性的遍历
+`)
+</script>
+</html>
