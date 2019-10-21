@@ -55,6 +55,16 @@ log(JSON.stringify(obj))
 log(Object.assign({}, obj))
 log(
 `四、属性的遍历
+    1.for...in: 循环遍历对象自身的和继承的可枚举属性（不含Symbal属性）
+    2.Object.keys(obj)：返回一个数组，包含对象自身的（不含继承的）所有可枚举属性（不含Symbal属性）的键名
+    3.Object.getOwnPropertyNames(obj)：返回一个数组，包含对象自身的所有属性（不含Symbal属性，但是包括不可枚举属性）的键名
+    4.Object.getOwnPropertySymbals(obj)：返回一个数组，包含对象自身的所有Symbal属性的键名。
+    5.Reflect.ownkeys(obj)：返回一个数组，包含对象自身的所有键名，不管键名是Symbal或字符串，也不管是否可枚举
+    【*】以上的5种方法变量对象的键名，都遵守同样的属性遍历的次序规则
+        首先遍历所有数值键，按照数值升序排列
+        其次遍历所有字符串键，按照加入时间升序排列
+        最后遍历所有Symbal键，按照加入时间升序排列
+
 `)
 </script>
 </html>
