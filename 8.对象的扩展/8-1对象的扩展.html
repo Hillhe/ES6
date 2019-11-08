@@ -66,5 +66,17 @@ log(
         最后遍历所有Symbal键，按照加入时间升序排列
 
 `)
+log(
+`五、super关键字
+    1.指向当前对象的原型对象
+    2.目前，只有对象方法的简写法可以让 JavaScript 引擎确认，定义的是对象的方法。
+    3.JS引擎内部，super.xx等同于：Object.getPrototypeOf(this).foo(属性)或者Object.getPrototypeOf(this).foo.call(this)
+`)
+log(
+`六、对象的扩展运算符
+    1.解构赋值：解构赋值的拷贝是浅拷贝，引用类型的数据拷贝的只是这个值的引用，而不是值的副本
+    2.扩展运算符的解构赋值，不能复制继承自原型对象的属性
+    3.与数组的扩展运算符一样，对象的扩展运算符后面可以跟表达式
+`)
 </script>
 </html>

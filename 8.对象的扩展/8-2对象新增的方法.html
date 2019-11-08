@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>8-2对象新增的方法</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、Object.is()
+    1.用来比较两个值是否严格相等，与（===）比较运算符行为基本一致，【不同之处】：+0不等于-0， NaN等于NaN。
+`)
+// 1
+log(+0 == -0) //true
+log(NaN == NaN) //false
+log('foo' == 'foo') //true
+log({} == {}) //false
+
+log(+0 === -0) //true
+log(NaN === NaN) //false
+log('foo' === 'foo') //true
+log({} === {}) //false
+
+
+log(Object.is(+0, -0)) //false
+log(Object.is(NaN, NaN)) //true
+log(Object.is('foo', 'foo')) //true
+log(Object.is({}, {})) //false
+log(
+`二、Object.assign()
+    1.用来合并对象，如果参数不是对象，则会转为对象
+    2.【*】注意
+        2-1.浅拷贝
+        2-2.同名属性的替换
+        3-3.数组的处理，会把数组视为对象
+        3-4.取值函数处理，一般只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制
+        3-5.无法正确拷贝set和get属性
+`)
+// 1
+log(Object.assign(2, 3)) // Number(2)
+// 3-3
+log(Object.assign([1,2,3],[4,5])) //[4,5,3]
+// 3-4，3-5
+const source = {
+    get foo() {return 1},
+    set foo(v) {console.log(v)}
+}
+let target = {};
+log(Object.assign(target, source)) //{foo: 1}
+target = {}
+Object.defineProperties(target, Object.getOwnPropertyDescriptors(source))
+log(target, Object.getOwnPropertyDescriptors(target))
+log(
+`三、Object.getOwnPropertyDescriptors()
+    1.es5的Object.getOwnProperyDescriptor()会返回某个对象属性的描述，es7Object.getOwnPropertyDescriptors()返回所有自身属性（非继承属性）的描述
+    2.自己实现
+`)
+// 1
+let own = Object.create({a: 124}, {b: {enumerable: true, value: 123}});
+log(own, Object.getOwnPropertyDescriptors(own));
+// 2
+function getOwnPropertyDescriptors(obj) {
+    let results = {};
+    for (const key of Reflect.ownKeys(obj)) {
+        results[key] = Object.getOwnPropertyDescriptor(own, key);
+    }
+    return results;
+}
+log(getOwnPropertyDescriptors(own))
+</script>
+</html>
