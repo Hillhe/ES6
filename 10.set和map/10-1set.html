@@ -12,8 +12,34 @@
 <script>
 let {log} = console
 log(
-`一、
+`一、类似数组，成员值唯一
+    1.参数可接受类数组或数组（具有iterable接口的数据结构）
+    2.向set加入值的时候不会发生类型转换，NaN等于自身,对象不相等
+    3.Set结构的实例属性和方法
+        属性：
+        Set.prototype.constructor: 构造函数，Set
+        Set.prototype.size: 返回Set成员的总数
+        操作方法：
+        Set.prototype.add(val): 添加值，返回Set
+        Set.prototype.delete(val): 删除值，返回Boolean，表示删除是否成功
+        Set.prototype.has(val): 返回Boolean值，表示是否有该成员
+        Set.prototype.clear(): 清除所有成员，没有返回值
+        遍历方法：*Set的遍历顺序就是插入顺序，keys,values行为一致
+        Set.prototype.keys()：返回键名的遍历器
+        Set.prototype.values()：返回键值的遍历器
+        Set.prototype.entries()：返回键值对的遍历器
+        Set.prototype.forEach()：使用回调函数遍历每个成员
 `)
-
+// 2
+let s = new Set();
+s.add(5);
+s.add('5');
+s.add(NaN);
+s.add(NaN);
+log(s); //{5, "5", NaN}
+log(Array.from(s));
+log([...s]);
+// 3
+log(s.keys(), s.values(), s.entries());
 </script>
 </html>

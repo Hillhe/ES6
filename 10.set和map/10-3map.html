@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>map</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、Hash结构的实现，"值-值"的对应。
+    1.只有对同一个对象的引用，Map结构才视为同一个键
+    2.实例的属性和操作方法 
+        size属性
+        操作方法：
+        Map.prototype.set(key, value)：返回当前对象
+        Map.prototype.get(key)：没有返回undefined
+        Map.prototype.has(key)：返回布尔值
+        Map.prototype.delete(key)： 布尔值
+        Map.prototype.clear()：清除所有成员，无返回值
+        遍历方法：*Map的遍历顺序就是插入顺序
+        Map.prototype.keys()：返回键名的遍历器。
+        Map.prototype.values()：返回键值的遍历器。
+        Map.prototype.entries()：返回所有成员的遍历器。
+        Map.prototype.forEach()：遍历 Map 的所有成员。
+`)
+let map = new Map();
+// 1
+map.set(['a'], 'aaa');
+log(map.get(['aaa'])); //undefined
+let obj = ['a'];
+map.set(obj, 'obj');
+log(map.get(obj)); //obj
+// 2
+log(map.keys(), map.values(), map.entries());
+</script>
+</html>

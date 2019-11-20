@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>weakSet</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、不重复值的集合
+    1.weakSet的成员只能是对象，不能是其他的值
+    2.因为weakSet成员对象是弱引用，会随时消失，因此不能遍历,没有size属性
+    3.属性和方法
+        WeakSet.prototype.add(value)：向 WeakSet 实例添加一个新成员。
+        WeakSet.prototype.delete(value)：清除 WeakSet 实例的指定成员。
+        WeakSet.prototype.has(value)：返回一个布尔值，表示某个值是否在 WeakSet 实例之中。
+    4.用法，储存dom结点
+`)
+</script>
+</html>
