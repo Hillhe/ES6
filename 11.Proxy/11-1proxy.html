@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Proxy</title>
+</head>
+<body>
+    
+</body>
+<script>
+let {log} = console
+log(
+`一、用于修改某些操作的默认行为，等同于在语言层面做出修改
+    1.接收两个参数（1）目标对象，（2）处理函数handler,如果没有设置任何拦截，等于源对象
+    2.proxy拦截一共13种
+        （1）get(target, propKey, receiver)：拦截对象属性的读取
+`)
+// 1
+var obj = new Proxy({}, {
+  get: function (target, key, receiver) {
+    console.log(target, `getting ${key}!`, receiver);
+    return Reflect.get(target, key, receiver);
+  },
+  set: function (target, key, value, receiver) {
+    console.log(`setting ${key}!`);
+    return Reflect.set(target, key, value, receiver);
+  }
+});
+log(obj.name);
+// 2
+</script>
+</html>
